@@ -3,12 +3,30 @@ package model;
 import java.util.ArrayList;
 
 public class Usuario {
-    public String nome;
-    public ArrayList<Playlist> playlists = new ArrayList<>();
+
+    private String nome;
+    private ArrayList<Playlist> playlists;
+
+    public Usuario() {
+        this("Usuário");
+    }
 
     public Usuario(String nome) {
-        this.nome = nome;
-        playlists.add(new Playlist("Global"));
+        setNome(nome);
+        this.playlists = new ArrayList<>();
+        this.playlists.add(new Playlist("Global"));
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        if (nome == null || nome.isBlank()) {
+            this.nome = "Usuário";
+        } else {
+            this.nome = nome;
+        }
     }
 
     public void criarPlaylist(String nome) {
@@ -17,14 +35,16 @@ public class Usuario {
 
     public Playlist getPlaylist(String nome) {
         for (Playlist p : playlists) {
-            if (p.nome.equals(nome)) return p;
+            if (p.getNome().equalsIgnoreCase(nome)) {
+                return p;
+            }
         }
         return null;
     }
 
     public void listarPlaylists() {
         for (Playlist p : playlists) {
-            System.out.println("- " + p.nome);
+            System.out.println("- " + p.getNome());
         }
     }
 }

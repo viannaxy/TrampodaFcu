@@ -30,6 +30,7 @@ public class Main {
         System.out.println("4. Criar playlist");
         System.out.println("5. Listar playlists");
         System.out.println("0. Sair");
+        System.out.print("Escolha: ");
     }
 
     private void processar(int op) {
@@ -39,6 +40,8 @@ public class Main {
             case 3 -> buscar();
             case 4 -> criarPlaylist();
             case 5 -> user.listarPlaylists();
+            case 0 -> System.out.println("Saindo...");
+            default -> System.out.println("Opção inválida");
         }
     }
 
@@ -65,15 +68,23 @@ public class Main {
         System.out.print("Buscar: ");
         String b = scanner.nextLine().toLowerCase();
 
-        for (Musica m : global.musicas) {
+        boolean encontrou = false;
+
+        for (Musica m : global.getMusicas()) {
             if (m.contemTitulo(b)) {
                 m.exibir();
+                encontrou = true;
             }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhuma música encontrada.");
         }
     }
 
     private void criarPlaylist() {
         System.out.print("Nome: ");
         user.criarPlaylist(scanner.nextLine());
+        System.out.println("Playlist criada!");
     }
 }
